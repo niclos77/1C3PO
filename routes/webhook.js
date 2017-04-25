@@ -1,6 +1,10 @@
 /**
  * Created by theodo on 25/04/17.
  */
+
+var config = require('config'),
+    request = require('request');
+
 var express = require('express');
 var router = express.Router();
 
