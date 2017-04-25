@@ -68,14 +68,14 @@ function receivedMessage(event) {
 
         // If we receive a text message, check to see if it matches a keyword
         // and send back the example. Otherwise, just echo the text we received.
-        switch (messageText) {
+        /*switch (messageText) {
             case 'generic':
                 sendGenericMessage(senderID);
                 break;
 
-            default:
+            default:*/
                 sendTextMessage(senderID, messageText);
-        }
+        // }
     } else if (messageAttachments) {
         sendTextMessage(senderID, "Message with attachment received");
     }
@@ -86,6 +86,7 @@ function sendGenericMessage(recipientId, messageText) {
 }
 
 function sendTextMessage(recipientId, messageText) {
+    console.log("Entrée dans sendTextMessage");
     var messageData = {
         recipient: {
             id: recipientId
@@ -95,6 +96,7 @@ function sendTextMessage(recipientId, messageText) {
         }
     };
 
+    console.log("Objet retourné = "+JSON.stringify(messageData));
     callSendAPI(messageData);
 }
 
@@ -119,4 +121,5 @@ function callSendAPI(messageData) {
         }
     });
 }
+
 module.exports = router;
