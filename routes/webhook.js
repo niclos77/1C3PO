@@ -104,10 +104,13 @@ function receivedMessage(event) {
 
 function saveMessage(senderID, timeOfMessage, message) {
     // Fonction appelée pour sauvegarder les données identité/date/message de la conversation, pour chaque senderID
+    console.log("entrée dans saveMessage")
     if(messages[senderID]) {
+      console.log("entrée dans le if savemessage")
       messages[senderID].push({time:timeOfMessage, message:message});
     }
     else {
+      console.log("entrée dans le else savemessage")
       messages[senderID]=[];
       messages[senderID].push({time:timeOfMessage, message:message});
     }
