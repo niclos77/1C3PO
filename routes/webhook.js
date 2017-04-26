@@ -80,7 +80,7 @@ function receivedMessage(event) {
         reponse = `Alors... \nC'est Toto qui va à la pharmacie et... \nBref, tu la connais !`
       }
 
-      sendTextMessage(senderID, messageText);
+      sendTextMessage(senderID, reponse);
     } else if (messageAttachments) {
         sendTextMessage(senderID, "Message with attachment received");
     }
