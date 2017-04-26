@@ -3,3 +3,9 @@ extends layout
 block content
   h1 Welcome Home Admin !
   img(src='images/hi.gif', alt='1-C3PO')
+
+  each index in Object.keys(messages)
+    p= index
+    p Ceci est un message fixe
+
+  p On n'est pas dans le each

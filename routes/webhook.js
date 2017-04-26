@@ -61,7 +61,8 @@ router.post('/webhook', function (req, res) {
 
 /* GET admin page. */
 router.get('/admin', function(req, res, next) {
-  res.render('admin');
+  var messages = req.app.get('messages');
+  res.render('admin', {messages: messages});
 });
 
 
