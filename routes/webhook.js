@@ -114,7 +114,7 @@ function saveMessage(senderID, timeOfMessage, message) {
       messages[senderID]=[];
       messages[senderID].push({time:timeOfMessage, message:message});
     }
-    console.log(messages);
+    console.log(JSON.stringify(messages));
 }
 
 
