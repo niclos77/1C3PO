@@ -3,6 +3,7 @@ var config = require('config'),
 
 var express = require('express');
 var router = express.Router();
+var messages = [];
 
 const PAGE_ACCESS_TOKEN = (process.env.MESSENGER_PAGE_ACCESS_TOKEN) ?
   (process.env.MESSENGER_PAGE_ACCESS_TOKEN) :
@@ -66,6 +67,8 @@ router.get('/admin', function(req, res, next) {
 
 
 
+
+
 //************************* FONCTIONS *******************************
 
 
@@ -74,6 +77,8 @@ function receivedMessage(event) {
     var recipientID = event.recipient.id;
     var timeOfMessage = event.timestamp;
     var message = event.message;
+
+    saveMessage(senderID, timeOfMessage, message);
 
     console.log("Received message for user %d and page %d at %d with message:",
         senderID, recipientID, timeOfMessage);
@@ -96,6 +101,19 @@ function receivedMessage(event) {
         sendTextMessage(senderID, "Message with attachment received");
     }
 }
+
+function saveMessage(senderID, timeOfMessage, message) {
+    // Fonction appelée pour sauvegarder les données identité/date/message de la conversation, pour chaque senderID
+    if(messages[senderID]) {
+      messages[senderID].push({time:timeOfMessage, message:message});
+    }
+    else {
+      messages[senderID]=[];
+      messages[senderID].push({time:timeOfMessage, message:message});
+    }
+    console.log(messages);
+}
+
 
 function sendGenericMessage(recipientId, messageText) {
     // To be expanded in later sections
