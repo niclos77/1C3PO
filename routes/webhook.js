@@ -74,17 +74,13 @@ function receivedMessage(event) {
     var messageAttachments = message.attachments;
 
     if (messageText) {
+      let reponse = messageText;
 
-        // If we receive a text message, check to see if it matches a keyword
-        // and send back the example. Otherwise, just echo the text we received.
-        /*switch (messageText) {
-            case 'generic':
-                sendGenericMessage(senderID);
-                break;
+      if (messageText.toUpperCase().includes('TOTO')) {
+        reponse = `Alors... \nC'est Toto qui va à la pharmacie et... \nBref, tu la connais !`
+      }
 
-            default:*/
-                sendTextMessage(senderID, messageText);
-        // }
+      sendTextMessage(senderID, messageText);
     } else if (messageAttachments) {
         sendTextMessage(senderID, "Message with attachment received");
     }
