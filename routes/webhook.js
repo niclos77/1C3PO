@@ -58,6 +58,17 @@ router.post('/webhook', function (req, res) {
     }
 });
 
+
+/* GET admin page. */
+router.get('/admin', function(req, res, next) {
+  res.render('admin');
+});
+
+
+
+//************************* FONCTIONS *******************************
+
+
 function receivedMessage(event) {
     var senderID = event.sender.id;
     var recipientID = event.recipient.id;
@@ -74,7 +85,7 @@ function receivedMessage(event) {
     var messageAttachments = message.attachments;
 
     if (messageText) {
-      let reponse = messageText;
+      var reponse = messageText;
 
       if ( (messageText.toUpperCase()).includes('TOTO')) {
         reponse = `Alors... \nC'est Toto qui va à la pharmacie et... \nBref, tu la connais !`
