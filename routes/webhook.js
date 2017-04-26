@@ -1,19 +1,24 @@
-/**
- * Created by theodo on 25/04/17.
- */
-
 var config = require('config'),
     request = require('request');
 
 var express = require('express');
 var router = express.Router();
 
+const PAGE_ACCESS_TOKEN = (process.env.MESSENGER_PAGE_ACCESS_TOKEN) ?
+  (process.env.MESSENGER_PAGE_ACCESS_TOKEN) :
+  config.get('pageAccessToken');
+
+const VALIDATION_TOKEN = (process.env.MESSENGER_VALIDATION_TOKEN) ?
+  (process.env.MESSENGER_VALIDATION_TOKEN) :
+  config.get('validationToken');
+
 /* GET Validation FB Token */
 router.get('/webhook', function(req, res) {
     console.log("hub.mode="+ req.query['hub.mode'])
     console.log("hub.verify_token="+ req.query['hub.verify_token'])
     if (req.query['hub.mode'] === 'subscribe' &&
-        req.query['hub.verify_token'] === "bNr6I3KWSH7220q4398Od8IBeX2owLF2") {
+        // req.query['hub.verify_token'] === "bNr6I3KWSH7220q4398Od8IBeX2owLF2") {
+        req.query['hub.verify_token'] === VALIDATION_TOKEN) {
         console.log("Validating webhook");
         res.status(200).send(req.query['hub.challenge']);
     } else {
@@ -107,7 +112,8 @@ function sendTextMessage(recipientId, messageText) {
 function callSendAPI(messageData) {
     request({
         uri: 'https://graph.facebook.com/v2.6/me/messages',
-        qs: { access_token: "EAAEZAn1aPlp0BAPMlsZBBiju10ZCqcCRH34jgWg3NUt11OCyEimwabauCgBH5Kv2584ByhvBq9ExpR5L8FMApU6lKezIHMcc4VhsRwDgr0K3kzhMmtoYro9DkHz9jZABTwdAhYsWViOY884yr9AiMxOV3dL8C70GCDz4agaqlgZDZD" },
+        // qs: { access_token: "EAAEZAn1aPlp0BAPMlsZBBiju10ZCqcCRH34jgWg3NUt11OCyEimwabauCgBH5Kv2584ByhvBq9ExpR5L8FMApU6lKezIHMcc4VhsRwDgr0K3kzhMmtoYro9DkHz9jZABTwdAhYsWViOY884yr9AiMxOV3dL8C70GCDz4agaqlgZDZD" },
+        qs: { access_token: PAGE_ACCESS_TOKEN },
         method: 'POST',
         json: messageData
 
