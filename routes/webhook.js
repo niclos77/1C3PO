@@ -76,7 +76,7 @@ function receivedMessage(event) {
     if (messageText) {
       let reponse = messageText;
 
-      if (messageText.toUpperCase().includes('TOTO')) {
+      if ( (messageText.toUpperCase()).includes('TOTO')) {
         reponse = `Alors... \nC'est Toto qui va à la pharmacie et... \nBref, tu la connais !`
       }
 
