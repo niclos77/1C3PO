@@ -114,7 +114,8 @@ function saveMessage(senderID, timeOfMessage, message, req) {
       messages[senderID]=[];
       messages[senderID].push({time:timeOfMessage, message:message});
     }
-    console.log(messages.length);
+    console.log('longueur du tableau message : ' + messages[senderID].length);
+    console.log(messages);
 }
 
 
