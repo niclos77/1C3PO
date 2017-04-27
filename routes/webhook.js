@@ -68,10 +68,11 @@ router.get('/admin', function(req, res, next) {
   for (i in Object.keys(messages)) {
     console.log('i = '+i);
     console.log(messages[i]);
+    var userID = Object.keys(messages)[i];
     var userObj = {
-      userID: i,
-      lastConnection: messages[i][messages[i].length-1].timeStamp,
-      allMessages: messages
+      userID: userID,
+      lastConnection: messages[userID][messages[userID].length-1].timeStamp,
+      allMessages: messages[userID]
     }
     messagesRender.push(userObj);
   }
