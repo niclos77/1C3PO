@@ -63,21 +63,22 @@ router.post('/webhook', function (req, res) {
 router.get('/admin', function(req, res, next) {
   var messages = req.app.get('messages');
   var messagesRender = [];
-  console.log('GET /admin');
-  console.log(messages);
+  // console.log('GET /admin');
+  // console.log(messages);
   for (i in Object.keys(messages)) {
-    console.log('i = '+i);
-    console.log(messages[i]);
+    // console.log('i = '+i);
+    // console.log(messages[i]);
     var userID = Object.keys(messages)[i];
     var userObj = {
       userID: userID,
-      lastConnection: messages[userID][messages[userID].length-1].timeStamp,
+      lastConnection: messages[userID][messages[userID].length-1].time,
       allMessages: messages[userID]
     }
     messagesRender.push(userObj);
   }
+  console.log('GET /admin render :');
   console.log(messagesRender);
-  res.render('admin', {messages: messages});
+  res.render('admin', {messages: messagesRender});
 });
 
 

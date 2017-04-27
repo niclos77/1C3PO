@@ -4,7 +4,10 @@ block content
   h1 Welcome Home Admin !
   img(src='images/hi.gif', alt='1-C3PO')
 
-  each index in Object.keys(messages)
-    p L'utilisateur #{index} s'est connecté le #{messages[index][messages[index].length-1].timeOfMessage} #{timeOfMessage}
-    p ---------
+  table
+    each userObj in users
+      tr
+        td #{userObj.userID}
+        td #{userObj.lastConnection}    
+
   p Fin de la liste des connexions
