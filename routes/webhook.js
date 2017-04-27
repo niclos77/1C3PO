@@ -69,9 +69,15 @@ router.get('/admin', function(req, res, next) {
     // console.log('i = '+i);
     // console.log(messages[i]);
     var userID = Object.keys(messages)[i];
+
+    var lastConnectionTimestamp = messages[userID][messages[userID].length-1].time;
+    var lastConnDate = new Date(lastConnectionTimestamp);
+    var month = lastConnDate.getMonth() + 1;
+    var lastConnection = lastConnDate.getYear()+'-'+month+'-'+lastConnDate.getDate()+' '+lastConnDate.getHours()+':'+lastConnDate.getMinutes();
+
     var userObj = {
       userID: userID,
-      lastConnection: messages[userID][messages[userID].length-1].time,
+      lastConnection: lastConnection,
       allMessages: messages[userID]
     }
     messagesRender.push(userObj);
