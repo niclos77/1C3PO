@@ -73,7 +73,7 @@ router.get('/admin', function(req, res, next) {
     var lastConnectionTimestamp = messages[userID][messages[userID].length-1].time;
     var lastConnDate = new Date(lastConnectionTimestamp);
     var month = lastConnDate.getMonth() + 1;
-    var lastConnection = lastConnDate.getYear()+'-'+month+'-'+lastConnDate.getDate()+' '+lastConnDate.getHours()+':'+lastConnDate.getMinutes();
+    var lastConnection = lastConnDate.getFullYear()+'-'+month+'-'+lastConnDate.getDate()+' '+lastConnDate.getHours()+':'+lastConnDate.getMinutes();
 
     var userObj = {
       userID: userID,
