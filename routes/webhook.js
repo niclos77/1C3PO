@@ -62,6 +62,16 @@ router.post('/webhook', function (req, res) {
 /* GET admin page. */
 router.get('/admin', function(req, res, next) {
   var messages = req.app.get('messages');
+  var messagesRender = [];
+  for (i in Object.keys(messages)) {
+    var userObj = {
+      userID: i,
+      lastConnection: messages[i][messages[i].length-1].timeStamp,
+      allMessages: messages
+    }
+    messagesRender.push(userObj);
+  }
+  console.log(messagesRender);
   res.render('admin', {messages: messages});
 });
 
