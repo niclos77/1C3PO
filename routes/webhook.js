@@ -84,7 +84,7 @@ router.get('/admin', function(req, res, next) {
   }
   console.log('GET /admin render :');
   console.log(messagesRender);
-  res.render('admin', {users: messagesRender});
+  res.render('admin', {users: messagesRender, lol:'lol'});
 });
 
 
