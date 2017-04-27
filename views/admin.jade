@@ -7,13 +7,12 @@ block content
 
   h3 Liste des derniers échanges FB avec le bot
 
-  //    tr
-  //      td Identifiant FB
-  //      td Date et heure
-  //      td Age
-
-  p #{lol}
   table
+    thead
+      tr
+        td Identifiant FB
+        td Date et heure
+        td Age
     each userObj in users
       tr
         td #{userObj.userID}

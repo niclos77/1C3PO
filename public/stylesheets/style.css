@@ -6,3 +6,20 @@ body {
 a {
   color: #00B7FF;
 }
+
+thead {
+  font-weight: bold;
+  text-align: center;
+}
+
+tr td:nth-child(1) {
+  width: 500px;
+}
+
+tr td:nth-child(2) {
+  width: 200px;
+}
+
+tr td:nth-child(3) {
+  width: 150px;
+}
