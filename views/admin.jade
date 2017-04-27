@@ -4,10 +4,17 @@ block content
   h1 Welcome Home Admin !
   img(src='images/hi.gif', alt='1-C3PO')
 
+
+h3 *Liste des derniers échanges FB avec le bot*
   table
+    tr
+      td Identifiant FB
+      td Date et heure
+      td Age
+
     each userObj in users
       tr
         td #{userObj.userID}
-        td #{userObj.lastConnection}    
+        td #{userObj.lastConnection}
 
   p Fin de la liste des connexions
