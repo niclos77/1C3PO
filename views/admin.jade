@@ -4,7 +4,27 @@ block content
   h1 Welcome Home Admin !
   img(src='images/hi.gif', alt='1-C3PO')
 
+  br
+  br
+  br
+  h3 Bouton ON/OFF
+  if modeBot
+    label.switch
+      input(type='checkbox' checked)
+      .slider.round
+    p Bouton ON   : L'humain doit répondre
+  else
+    label.switch
+      input(type='checkbox')
+      .slider.round
+    p Bouton OFF  : Le bot est activé et répond
 
+
+
+
+  br
+  br
+  br
   h3 Liste des derniers échanges FB avec le bot
 
   table

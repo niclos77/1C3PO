@@ -62,6 +62,7 @@ router.post('/webhook', function (req, res) {
 /* GET admin page. */
 router.get('/admin', function(req, res, next) {
   var messages = req.app.get('messages');
+  var modeBot = req.app.get('modeBot');
   var messagesRender = [];
   // console.log('GET /admin');
   // console.log(messages);
@@ -84,7 +85,7 @@ router.get('/admin', function(req, res, next) {
   }
   console.log('GET /admin render :');
   console.log(messagesRender);
-  res.render('admin', {users: messagesRender, lol:'lol'});
+  res.render('admin', {users: messagesRender, modeBot: modeBot});
 });
 
 
