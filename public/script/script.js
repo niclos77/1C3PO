@@ -6,6 +6,8 @@
 window.onload = init;
 
 function init () {
+
+  // Init du bouton
   console.log('Init');
 
   var caseACocher = document.querySelector('.switch input');

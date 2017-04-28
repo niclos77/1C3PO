@@ -12,6 +12,20 @@ const VALIDATION_TOKEN = (process.env.MESSENGER_VALIDATION_TOKEN) ?
   (process.env.MESSENGER_VALIDATION_TOKEN) :
   config.get('validationToken');
 
+var dbConfig = {
+  apiKey: "AIzaSyBk22iFIvPU27E8bVTB9edtA-24S5TwG4I",
+  authDomain: "c3po-8929e.firebaseapp.com",
+  databaseURL: "https://c3po-8929e.firebaseio.com",
+  projectId: "c3po-8929e",
+  storageBucket: "c3po-8929e.appspot.com",
+  messagingSenderId: "765981394754"
+};
+firebase.initializeApp(dbConfig);
+
+// Get a reference to the database service
+var database = firebase.database();
+
+
 /* GET Validation FB Token */
 router.get('/webhook', function(req, res) {
     console.log("hub.mode="+ req.query['hub.mode'])
@@ -112,6 +126,7 @@ function receivedMessage(event, req) {
     var modeBot = req.app.get('modeBot');
 
     saveMessage(senderID, timeOfMessage, message, req);
+    saveUser(senderID);
 
     console.log("Received message for user %d and page %d at %d with message:",
         senderID, recipientID, timeOfMessage);
@@ -128,7 +143,8 @@ function receivedMessage(event, req) {
       if ( (messageText.toUpperCase()).includes('TOTO')) {
         reponse = `Alors... \nC'est Toto qui va à la pharmacie et... \nBref, tu la connais !`
       }
-      reponse = `Hello ! Merci pour ton message. Malheureusement, personne n'est disponible pour te répondre maintenant. Nous reviendrons vers toi demain matin ! En attendant, tu peux peut être me donner ton numéro de téléphone, comme ça je t'appelle direct !
+      reponse = `Hello !
+Merci pour ton message. Malheureusement, personne n'est disponible pour te répondre maintenant. Nous reviendrons vers toi demain matin ! En attendant, tu peux peut être me donner ton numéro de téléphone, comme ça je t'appelle direct !
 A plus !`;
       sendTextMessage(senderID, reponse);
     }
@@ -138,17 +154,18 @@ function saveMessage(senderID, timeOfMessage, message, req) {
     var messages = req.app.get('messages');
 
     // Fonction appelée pour sauvegarder les données identité/date/message de la conversation, pour chaque senderID
-    console.log("entrée dans saveMessage");
+    // console.log("entrée dans saveMessage");
     if(messages[senderID]) {
-      console.log("entrée dans le if savemessage");
+      // console.log("entrée dans le if savemessage");
       messages[senderID].push({time:timeOfMessage, message:message});
+
     } else {
-      console.log("entrée dans le else savemessage");
+      // console.log("entrée dans le else savemessage");
       messages[senderID]=[];
       messages[senderID].push({time:timeOfMessage, message:message});
     }
-    console.log('longueur du tableau message : ' + messages[senderID].length);
-    console.log(messages);
+    // console.log('longueur du tableau message : ' + messages[senderID].length);
+    // console.log(messages);
 }
 
 
@@ -239,6 +256,31 @@ function getUserInfo(userObj) {
       }
     });
   })
+}
+
+function saveUser(userId) {
+  // variable 'globale' des messages stockés
+  var messages = req.app.get('messages');
+  if (messages[userId]) {
+
+    var lastConnectionTimestamp = messages[userID][messages[userID].length-1].time;
+    var lastConnDate = new Date(lastConnectionTimestamp);
+    var month = lastConnDate.getMonth() + 1;
+    var lastConnection = lastConnDate.getFullYear()+'-'+month+'-'+lastConnDate.getDate()+' '+lastConnDate.getHours()+':'+lastConnDate.getMinutes();
+
+    var userObj = {
+      userID: userID,
+      lastConnection: lastConnection,
+      allMessages: messages[userID]
+    }
+
+    getUserInfo(userObj)
+    .then(function (userObj) {
+      database.ref('users/' + userObj.userId).set(userObj);
+    })
+    .catch(function (err) {throw err})
+  }
+
 }
 
 module.exports = router;
