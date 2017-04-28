@@ -77,7 +77,7 @@ router.get('/admin', function(req, res, next) {
     var lastConnection = lastConnDate.getFullYear()+'-'+month+'-'+lastConnDate.getDate()+' '+lastConnDate.getHours()+':'+lastConnDate.getMinutes();
 
     callSendInfo(userID)
-    
+
     var userObj = {
       userID: userID,
       lastConnection: lastConnection,
@@ -86,7 +86,6 @@ router.get('/admin', function(req, res, next) {
     users.push(userObj);
   }
   console.log('GET /admin render :');
-  console.log(messagesRender);
   res.render('admin', {users: users, modeBot: modeBot});
 });
 
