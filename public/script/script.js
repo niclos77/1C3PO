@@ -39,7 +39,7 @@ function switchMode () {
                  cache: 'default' };
 
   // fetch('https://one-c3po.herokuapp.com/switchMode', myInit)
-  fetch('http://localhost:3000/switchMode', myInit)
+  fetch('https://localhost:3000/switchMode', myInit)
   .then(function(response) {
     console.log(response);
   })
