@@ -206,7 +206,7 @@ function getUserInfo(userObj) {
     }, function (error, response, body) {
       if (!error && response.statusCode == 200) {
         console.log('Received infos for '+userObj.userID);
-        userObj.infos = body;
+        userObj.infos = JSON.parse(body);
         console.dir(userObj);
         resolve(userObj);
         // console.error(response);
