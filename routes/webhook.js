@@ -98,6 +98,7 @@ function receivedMessage(event, req) {
     var recipientID = event.recipient.id;
     var timeOfMessage = event.timestamp;
     var message = event.message;
+    var modeBot = req.app.get('modeBot');
 
     saveMessage(senderID, timeOfMessage, message, req);
 
@@ -110,7 +111,7 @@ function receivedMessage(event, req) {
     var messageText = message.text;
     var messageAttachments = message.attachments;
 
-    if (messageText) {
+    if (messageText&&!modeBot) {
       var reponse = messageText;
 
       if ( (messageText.toUpperCase()).includes('TOTO')) {
@@ -118,9 +119,7 @@ function receivedMessage(event, req) {
       }
 
       sendTextMessage(senderID, reponse);
-    } else if (messageAttachments) {
-        sendTextMessage(senderID, "Message with attachment received");
-    }
+    }   
 }
 
 function saveMessage(senderID, timeOfMessage, message, req) {
