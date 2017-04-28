@@ -12,7 +12,7 @@ const VALIDATION_TOKEN = (process.env.MESSENGER_VALIDATION_TOKEN) ?
   (process.env.MESSENGER_VALIDATION_TOKEN) :
   config.get('validationToken');
 
-var dbConfig = {
+/*var dbConfig = {
   apiKey: "AIzaSyBk22iFIvPU27E8bVTB9edtA-24S5TwG4I",
   authDomain: "c3po-8929e.firebaseapp.com",
   databaseURL: "https://c3po-8929e.firebaseio.com",
@@ -23,7 +23,7 @@ var dbConfig = {
 firebase.initializeApp(dbConfig);
 
 // Get a reference to the database service
-var database = firebase.database();
+var database = firebase.database();*/
 
 
 /* GET Validation FB Token */
@@ -273,12 +273,12 @@ function saveUser(userId) {
       lastConnection: lastConnection,
       allMessages: messages[userID]
     }
-
+/*
     getUserInfo(userObj)
     .then(function (userObj) {
       database.ref('users/' + userObj.userId).set(userObj);
     })
-    .catch(function (err) {throw err})
+    .catch(function (err) {throw err})*/
   }
 
 }
