@@ -76,7 +76,8 @@ router.get('/admin', function(req, res, next) {
     var month = lastConnDate.getMonth() + 1;
     var lastConnection = lastConnDate.getFullYear()+'-'+month+'-'+lastConnDate.getDate()+' '+lastConnDate.getHours()+':'+lastConnDate.getMinutes();
 
-    callSendInfo(userID)
+    var infos = callSendInfo(userID);
+    console.dir(infos);
 
     var userObj = {
       userID: userID,
@@ -194,11 +195,12 @@ function callSendInfo(userID) {
 
     }, function (error, response, body) {
         if (!error && response.statusCode == 200) {
-            console.error(response);
+          return body;
+          // console.error(response);
         } else {
-            console.error("Unable to send message.");
-            console.error(response);
-            console.error(error);
+          console.error("Unable to send message.");
+          console.error(response);
+          console.error(error);
         }
     });
 }
