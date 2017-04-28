@@ -11,13 +11,16 @@ block content
   if modeBot
     label.switch
       input(type='checkbox' checked)
-      .slider.round
-    p Bouton ON   : L'humain doit répondre
+      .slider.round(onclick="switchMode()")
   else
     label.switch
       input(type='checkbox')
-      .slider.round
-    p Bouton OFF  : Le bot est activé et répond
+      .slider.round(onclick="switchMode()")
+
+  p#modeBotEtat
+
+  //p Bouton OFF  : Le bot est activé et répond
+  //p Bouton ON   : L'humain doit répondre
 
 
 
