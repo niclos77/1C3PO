@@ -13,7 +13,11 @@ function init () {
   // console.dir(caseACocher);
 
   var modeBotEtat = document.querySelector('#modeBotEtat');
-  modeBotEtat.innerText = "Bouton OFF  : Le bot est activé et répond";
+  if (botMode) {
+    modeBotEtat.innerText = "Bouton ON   : L'humain doit répondre";
+  } else {
+    modeBotEtat.innerText = "Bouton OFF  : Le bot est activé et répond";
+  }
 }
 
 function switchMode () {
@@ -27,4 +31,15 @@ function switchMode () {
     modeBotEtat.innerText = "Bouton OFF  : Le bot est activé et répond";
   }
   console.log(botMode);
+
+  var myHeaders = new Headers();
+  var myInit = { method: 'GET',
+                 headers: myHeaders,
+                 mode: 'cors',
+                 cache: 'default' };
+
+  fetch('https://one-c3po.herokuapp.com/switchMode', myInit)
+  .then(function(response) {
+    console.log(response);
+  })
 }
