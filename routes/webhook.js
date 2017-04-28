@@ -206,7 +206,28 @@ function getUserInfo(userObj) {
     }, function (error, response, body) {
       if (!error && response.statusCode == 200) {
         console.log('Received infos for '+userObj.userID);
-        userObj.infos = JSON.parse(body);
+        var infos = JSON.parse(body);
+        var hasInfo = false;
+
+        if (infos.first_name) {
+          userObj.prenom = infos.first_name;
+          hasInfo = true;
+        }
+        if (infos.last_name) {
+          userObj.nom = infos.last_name;
+          hasInfo = true;
+        }
+        if (infos.profile_pic) {
+          userObj.photo = infos.profile_pic;
+          hasInfo = true;
+        }
+        if (infos.gender) {
+          userObj.genre = infos.gender;
+          hasInfo = true;
+        }
+
+        userObj.hasInfo = hasInfo;
+
         console.dir(userObj);
         resolve(userObj);
         // console.error(response);
