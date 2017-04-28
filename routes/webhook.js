@@ -66,6 +66,9 @@ router.get('/admin', function(req, res, next) {
   var users = [];
   // console.log('GET /admin');
   // console.log(messages);
+
+  var promiseTab = [];
+
   for (i in Object.keys(messages)) {
     // console.log('i = '+i);
     // console.log(messages[i]);
@@ -76,18 +79,24 @@ router.get('/admin', function(req, res, next) {
     var month = lastConnDate.getMonth() + 1;
     var lastConnection = lastConnDate.getFullYear()+'-'+month+'-'+lastConnDate.getDate()+' '+lastConnDate.getHours()+':'+lastConnDate.getMinutes();
 
-    var infos = callSendInfo(userID);
-    console.dir(infos);
 
     var userObj = {
       userID: userID,
       lastConnection: lastConnection,
       allMessages: messages[userID]
     }
-    users.push(userObj);
+
+    promiseTab.push(getUserInfo(userObj))
   }
+
+  Promise.all(promiseTab)
+  .then(function (users) {
+    console.log('All users received : ');
+    console.dir(users);
+    res.render('admin', {users: users, modeBot: modeBot});
+  })
+  .catch(function (error) {console.error(error);})
   console.log('GET /admin render :');
-  res.render('admin', {users: users, modeBot: modeBot});
 });
 
 
@@ -186,23 +195,29 @@ function callSendAPI(messageData) {
 }
 
 /* Récuperer les infos utilisateurs à afficher dans le tableau ADMIN */
-function callSendInfo(userID) {
+function getUserInfo(userObj) {
+  return new Promise ((resolve, reject) => {
     request({
-        uri: 'https://graph.facebook.com/v2.6/'+userID,
-        // qs: { access_token: "EAAEZAn1aPlp0BAPMlsZBBiju10ZCqcCRH34jgWg3NUt11OCyEimwabauCgBH5Kv2584ByhvBq9ExpR5L8FMApU6lKezIHMcc4VhsRwDgr0K3kzhMmtoYro9DkHz9jZABTwdAhYsWViOY884yr9AiMxOV3dL8C70GCDz4agaqlgZDZD" },
-        qs: { access_token: PAGE_ACCESS_TOKEN },
-        method: 'GET'
+      uri: 'https://graph.facebook.com/v2.6/'+userObj.userID,
+      // qs: { access_token: "EAAEZAn1aPlp0BAPMlsZBBiju10ZCqcCRH34jgWg3NUt11OCyEimwabauCgBH5Kv2584ByhvBq9ExpR5L8FMApU6lKezIHMcc4VhsRwDgr0K3kzhMmtoYro9DkHz9jZABTwdAhYsWViOY884yr9AiMxOV3dL8C70GCDz4agaqlgZDZD" },
+      qs: { access_token: PAGE_ACCESS_TOKEN },
+      method: 'GET'
 
     }, function (error, response, body) {
-        if (!error && response.statusCode == 200) {
-          return body;
-          // console.error(response);
-        } else {
-          console.error("Unable to send message.");
-          console.error(response);
-          console.error(error);
-        }
+      if (!error && response.statusCode == 200) {
+        console.log('Received infos for '+userObj.userID);
+        userObj.infos = body;
+        console.dir(userObj);
+        resolve(userObj);
+        // console.error(response);
+      } else {
+        reject(error);
+        console.error("Unable to send message.");
+        console.error(response);
+        console.error(error);
+      }
     });
+  })
 }
 
 module.exports = router;
