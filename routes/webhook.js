@@ -63,7 +63,7 @@ router.post('/webhook', function (req, res) {
 router.get('/admin', function(req, res, next) {
   var messages = req.app.get('messages');
   var modeBot = req.app.get('modeBot');
-  var messagesRender = [];
+  var users = [];
   // console.log('GET /admin');
   // console.log(messages);
   for (i in Object.keys(messages)) {
@@ -76,16 +76,18 @@ router.get('/admin', function(req, res, next) {
     var month = lastConnDate.getMonth() + 1;
     var lastConnection = lastConnDate.getFullYear()+'-'+month+'-'+lastConnDate.getDate()+' '+lastConnDate.getHours()+':'+lastConnDate.getMinutes();
 
+    callSendInfo(userID)
+    
     var userObj = {
       userID: userID,
       lastConnection: lastConnection,
       allMessages: messages[userID]
     }
-    messagesRender.push(userObj);
+    users.push(userObj);
   }
   console.log('GET /admin render :');
   console.log(messagesRender);
-  res.render('admin', {users: messagesRender, modeBot: modeBot});
+  res.render('admin', {users: users, modeBot: modeBot});
 });
 
 
@@ -120,7 +122,7 @@ function receivedMessage(event, req) {
       reponse = `Hello ! Merci pour ton message. Malheureusement, personne n'est disponible pour te répondre maintenant. Nous reviendrons vers toi demain matin ! En attendant, tu peux peut être me donner ton numéro de téléphone, comme ça je t'appelle direct !
 A plus !`;
       sendTextMessage(senderID, reponse);
-    }   
+    }
 }
 
 function saveMessage(senderID, timeOfMessage, message, req) {
@@ -175,6 +177,25 @@ function callSendAPI(messageData) {
 
             console.log("Successfully sent generic message with id %s to recipient %s",
                 messageId, recipientId);
+        } else {
+            console.error("Unable to send message.");
+            console.error(response);
+            console.error(error);
+        }
+    });
+}
+
+/* Récuperer les infos utilisateurs à afficher dans le tableau ADMIN */
+function callSendInfo(userID) {
+    request({
+        uri: 'https://graph.facebook.com/v2.6/'+userID,
+        // qs: { access_token: "EAAEZAn1aPlp0BAPMlsZBBiju10ZCqcCRH34jgWg3NUt11OCyEimwabauCgBH5Kv2584ByhvBq9ExpR5L8FMApU6lKezIHMcc4VhsRwDgr0K3kzhMmtoYro9DkHz9jZABTwdAhYsWViOY884yr9AiMxOV3dL8C70GCDz4agaqlgZDZD" },
+        qs: { access_token: PAGE_ACCESS_TOKEN },
+        method: 'GET'
+
+    }, function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+            console.error(response);
         } else {
             console.error("Unable to send message.");
             console.error(response);
