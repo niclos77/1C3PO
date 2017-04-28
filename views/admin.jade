@@ -38,7 +38,7 @@ block content
         td Age
     each userObj in users
       tr
-        if #{userObj.hasInfo}
+        if userObj.hasInfo
           td
             span #{userObj.prenom} #{userObj.nom}
         else
