@@ -117,7 +117,8 @@ function receivedMessage(event, req) {
       if ( (messageText.toUpperCase()).includes('TOTO')) {
         reponse = `Alors... \nC'est Toto qui va à la pharmacie et... \nBref, tu la connais !`
       }
-
+      reponse = `Hello ! Merci pour ton message. Malheureusement, personne n'est disponible pour te répondre maintenant. Nous reviendrons vers toi demain matin ! En attendant, tu peux peut être me donner ton numéro de téléphone, comme ça je t'appelle direct !
+A plus !`;
       sendTextMessage(senderID, reponse);
     }   
 }
