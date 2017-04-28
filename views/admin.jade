@@ -40,7 +40,9 @@ block content
       tr
         if userObj.hasInfo
           td
-            span #{userObj.prenom} #{userObj.nom}
+            span
+              img(src="#{userObj.photo}")
+              | #{userObj.prenom} #{userObj.nom}
         else
           td #{userObj.userID}
         td #{userObj.lastConnection}
